@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>BookBridge — Login</title>
+  <link rel="stylesheet" href="css/style.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+</head>
+<body class="auth-page">
+  <div class="auth-split">
+    <div class="auth-hero">
+      <div class="hero-text">
+        <div class="logo-big">📚</div>
+        <h1>BookBridge</h1>
+        <p>Connect. Share. Read.<br/>Exchange books with fellow students.</p>
+        <div class="hero-stats">
+          <div><strong>500+</strong><span>Books Listed</span></div>
+          <div><strong>200+</strong><span>Students</span></div>
+          <div><strong>Free</strong><span>Forever</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="auth-form-side">
+      <div class="auth-card">
+        <h2>Welcome back</h2>
+        <p class="sub">Sign in to your account</p>
+        <div id="alert" class="alert hidden"></div>
+        <form id="loginForm">
+          <div class="form-group">
+            <label>Email</label>
+            <input type="email" id="email" placeholder="you@college.edu" required/>
+          </div>
+          <div class="form-group">
+            <label>Password</label>
+            <input type="password" id="password" placeholder="••••••••" required/>
+          </div>
+          <button type="submit" class="btn-primary" id="loginBtn">Sign In</button>
+        </form>
+        <p class="switch-link">New here? <a href="signup.html">Create account →</a></p>
+      </div>
+    </div>
+  </div>
+  <script src="js/auth.js"></script>
+  <script>
+    document.getElementById('loginForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const btn = document.getElementById('loginBtn');
+      btn.textContent = 'Signing in...'; btn.disabled = true;
+      try {
+        const res = await fetch(`${API_BASE}/auth/login`, {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            email:    document.getElementById('email').value,
+            password: document.getElementById('password').value
+          })
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.message || 'Login failed');
+        localStorage.setItem('token',    data.token);
+        localStorage.setItem('userId',   data.userId);
+        localStorage.setItem('userName', data.name);
+        localStorage.setItem('userDept', data.department || '');
+        window.location.href = 'browse.html';
+      } catch (err) {
+        showAlert(err.message, 'error');
+        btn.textContent = 'Sign In'; btn.disabled = false;
+      }
+    });
+  </script>
+</body>
+</html>

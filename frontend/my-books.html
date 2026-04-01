@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>BookBridge — My Books</title>
+  <link rel="stylesheet" href="css/style.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+</head>
+<body>
+  <nav class="navbar">
+    <a class="nav-brand" href="browse.html">📚 BookBridge</a>
+    <div class="nav-links">
+      <a href="browse.html">Browse</a>
+      <a href="my-books.html" class="active">My Books</a>
+      <a href="my-requests.html">Requests</a>
+      <span class="nav-user" id="navUser"></span>
+      <button id="logoutBtn" class="btn-logout">Logout</button>
+    </div>
+  </nav>
+
+  <main class="container">
+    <div class="page-header">
+      <h2>My Books</h2>
+      <p>Manage the books you've listed for exchange</p>
+    </div>
+
+    <!-- Add / Edit Book Form -->
+    <div class="form-card">
+      <h3 id="formTitle">List a New Book</h3>
+      <div id="alert" class="alert hidden"></div>
+      <form id="bookForm">
+        <input type="hidden" id="bookId"/>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Book Title *</label>
+            <input type="text" id="bTitle" placeholder="e.g., Operating System Concepts" required/>
+          </div>
+          <div class="form-group">
+            <label>Author *</label>
+            <input type="text" id="bAuthor" placeholder="e.g., Silberschatz" required/>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Subject</label>
+            <input type="text" id="bSubject" placeholder="e.g., Operating Systems"/>
+          </div>
+          <div class="form-group">
+            <label>Edition</label>
+            <input type="text" id="bEdition" placeholder="e.g., 10th"/>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Condition</label>
+            <select id="bCondition">
+              <option value="NEW">New</option>
+              <option value="GOOD" selected>Good</option>
+              <option value="FAIR">Fair</option>
+              <option value="WORN">Worn</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Description</label>
+            <input type="text" id="bDesc" placeholder="Any notes about the book"/>
+          </div>
+        </div>
+        <div class="form-actions">
+          <button type="submit" class="btn-primary" id="bookSubmit">List Book</button>
+          <button type="button" class="btn-secondary hidden" id="cancelEdit" onclick="resetForm()">Cancel</button>
+        </div>
+      </form>
+    </div>
+
+    <div id="myBookList" class="book-list">
+      <p class="loading">Loading your books...</p>
+    </div>
+  </main>
+
+  <script src="js/auth.js"></script>
+  <script src="js/my-books.js"></script>
+</body>
+</html>

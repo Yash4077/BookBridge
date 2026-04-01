@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>BookBridge — Browse Books</title>
+  <link rel="stylesheet" href="css/style.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+</head>
+<body>
+  <nav class="navbar">
+    <a class="nav-brand" href="browse.html">📚 BookBridge</a>
+    <div class="nav-links">
+      <a href="browse.html" class="active">Browse</a>
+      <a href="my-books.html">My Books</a>
+      <a href="my-requests.html">Requests</a>
+      <span class="nav-user" id="navUser"></span>
+      <button id="logoutBtn" class="btn-logout">Logout</button>
+    </div>
+  </nav>
+
+  <main class="container">
+    <div class="page-header">
+      <h2>Browse Books</h2>
+      <p>Find books listed by your fellow students</p>
+    </div>
+
+    <!-- Search Bar -->
+    <div class="search-bar">
+      <input type="text" id="searchInput" placeholder="Search by title, author, or subject..."/>
+      <button onclick="doSearch()" class="btn-search">🔍 Search</button>
+      <button onclick="loadBooks()" class="btn-clear">Clear</button>
+    </div>
+
+    <!-- Book Grid -->
+    <div id="bookGrid" class="book-grid">
+      <p class="loading">Loading books...</p>
+    </div>
+  </main>
+
+  <!-- Request Modal -->
+  <div id="modal" class="modal-overlay hidden">
+    <div class="modal">
+      <h3>Request Book</h3>
+      <p id="modalBookTitle" class="modal-book-name"></p>
+      <div class="form-group">
+        <label>Message to owner (optional)</label>
+        <textarea id="reqMessage" placeholder="Hi! I'd like to borrow this book for 2 weeks..." rows="3"></textarea>
+      </div>
+      <div class="modal-actions">
+        <button class="btn-primary" onclick="submitRequest()">Send Request</button>
+        <button class="btn-secondary" onclick="closeModal()">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/auth.js"></script>
+  <script src="js/browse.js"></script>
+</body>
+</html>

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>BookBridge — Sign Up</title>
+  <link rel="stylesheet" href="css/style.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+</head>
+<body class="auth-page">
+  <div class="auth-split">
+    <div class="auth-hero">
+      <div class="hero-text">
+        <div class="logo-big">📚</div>
+        <h1>BookBridge</h1>
+        <p>List your books. Borrow from others.<br/>Build a reading community.</p>
+      </div>
+    </div>
+    <div class="auth-form-side">
+      <div class="auth-card">
+        <h2>Create Account</h2>
+        <p class="sub">Join your college book network</p>
+        <div id="alert" class="alert hidden"></div>
+        <form id="signupForm">
+          <div class="form-row">
+            <div class="form-group">
+              <label>Full Name</label>
+              <input type="text" id="name" placeholder="Arjun Mehta" required/>
+            </div>
+            <div class="form-group">
+              <label>Department</label>
+              <select id="department">
+                <option value="">Select dept.</option>
+                <option>Computer Science</option>
+                <option>Electronics</option>
+                <option>Mechanical</option>
+                <option>Civil</option>
+                <option>Chemical</option>
+                <option>Information Technology</option>
+                <option>Other</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>College Email</label>
+            <input type="email" id="email" placeholder="you@college.edu" required/>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Phone (optional)</label>
+              <input type="text" id="phone" placeholder="9876543210"/>
+            </div>
+            <div class="form-group">
+              <label>Password</label>
+              <input type="password" id="password" placeholder="Min 6 chars" required minlength="6"/>
+            </div>
+          </div>
+          <button type="submit" class="btn-primary" id="signupBtn">Create Account</button>
+        </form>
+        <p class="switch-link">Have an account? <a href="index.html">Sign in →</a></p>
+      </div>
+    </div>
+  </div>
+  <script src="js/auth.js"></script>
+  <script>
+    document.getElementById('signupForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const btn = document.getElementById('signupBtn');
+      btn.textContent = 'Creating...'; btn.disabled = true;
+      try {
+        const res = await fetch(`${API_BASE}/auth/signup`, {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            name:       document.getElementById('name').value,
+            email:      document.getElementById('email').value,
+            password:   document.getElementById('password').value,
+            department: document.getElementById('department').value,
+            phone:      document.getElementById('phone').value
+          })
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.message || 'Signup failed');
+        localStorage.setItem('token',    data.token);
+        localStorage.setItem('userId',   data.userId);
+        localStorage.setItem('userName', data.name);
+        localStorage.setItem('userDept', data.department || '');
+        window.location.href = 'browse.html';
+      } catch (err) {
+        showAlert(err.message, 'error');
+        btn.textContent = 'Create Account'; btn.disabled = false;
+      }
+    });
+  </script>
+</body>
+</html>

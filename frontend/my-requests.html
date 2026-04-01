@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>BookBridge — Requests</title>
+  <link rel="stylesheet" href="css/style.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+</head>
+<body>
+  <nav class="navbar">
+    <a class="nav-brand" href="browse.html">📚 BookBridge</a>
+    <div class="nav-links">
+      <a href="browse.html">Browse</a>
+      <a href="my-books.html">My Books</a>
+      <a href="my-requests.html" class="active">Requests</a>
+      <span class="nav-user" id="navUser"></span>
+      <button id="logoutBtn" class="btn-logout">Logout</button>
+    </div>
+  </nav>
+
+  <main class="container">
+    <div class="page-header">
+      <h2>Requests</h2>
+    </div>
+
+    <div class="tabs">
+      <button class="tab-btn active" data-tab="received">Received Requests</button>
+      <button class="tab-btn" data-tab="sent">Requests I Sent</button>
+    </div>
+
+    <div id="tab-received" class="tab-content">
+      <div id="receivedList"><p class="loading">Loading...</p></div>
+    </div>
+    <div id="tab-sent" class="tab-content hidden">
+      <div id="sentList"><p class="loading">Loading...</p></div>
+    </div>
+  </main>
+
+  <script src="js/auth.js"></script>
+  <script src="js/my-requests.js"></script>
+</body>
+</html>
